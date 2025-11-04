@@ -1,21 +1,22 @@
-package com.fend.moviesheriff.dto;
+package com.fend.moviesheriff.domain.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-public record MovieRatingDTO(
+public record CreateMovieRatingDTO(
         @NotNull(message = "External Id cannot be null")
         @NotEmpty(message = "External Id cannot be empty")
         String externalId,
 
         @NotNull(message = "Rating cannot be null")
-        @NotEmpty(message = "Rating cannot be empty")
+        @Min(0)
         double rating,
 
         @NotNull(message = "User Id cannot be null")
-        @NotEmpty(message = "User Id cannot be empty")
+        @Min(0)
         Long userID
 ) {
 }

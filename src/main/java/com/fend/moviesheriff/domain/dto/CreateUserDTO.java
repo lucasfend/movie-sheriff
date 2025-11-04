@@ -1,11 +1,11 @@
-package com.fend.moviesheriff.dto;
+package com.fend.moviesheriff.domain.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-public record UserDTO(
+public record CreateUserDTO(
         @NotNull(message = "username cannot be null")
         @NotEmpty(message = "username cannot be empty")
         String username,
