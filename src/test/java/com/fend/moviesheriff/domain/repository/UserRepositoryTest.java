@@ -1,7 +1,6 @@
 package com.fend.moviesheriff.domain.repository;
 
 import com.fend.moviesheriff.domain.dto.CreateUserDTO;
-import com.fend.moviesheriff.domain.mapper.UserMapper;
 import com.fend.moviesheriff.domain.model.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -9,12 +8,79 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.Optional;
+
 @DataJpaTest
 @DisplayName("Tests for UserRepository")
 class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Test
+    @DisplayName("save method persists user when successful")
+    void saveUser_PersistUserOnDatabase_WhenSuccessful() {
+        CreateUserDTO userToSave = createUser();
+
+        User savedUser = this.userRepository.save(toUser(userToSave));
+
+        Assertions.assertThat(savedUser).isNotNull();
+        Assertions.assertThat(savedUser.getId()).isNotNull();
+
+        Assertions.assertThat(savedUser.getUsername()).isNotNull();
+        Assertions.assertThat(savedUser.getEmail()).isNotNull();
+        Assertions.assertThat(savedUser.getPassword()).isNotNull();
+
+        Assertions.assertThat(savedUser.getUsername()).isEqualTo(userToSave.username());
+        Assertions.assertThat(savedUser.getEmail()).isEqualTo(userToSave.email());
+        Assertions.assertThat(savedUser.getPassword()).isEqualTo(userToSave.password());
+    }
+
+    @Test
+    @DisplayName("save method updates user when successful")
+    void saveUser_UpdateUserOnDatabase_WhenSuccessful() {
+        CreateUserDTO userToSave = createUser();
+        User savedUser = this.userRepository.save(toUser(userToSave));
+
+        savedUser.setUsername("updated username");
+        User updatedUser = this.userRepository.save(savedUser);
+
+        Assertions.assertThat(updatedUser).isNotNull();
+        Assertions.assertThat(savedUser.getId()).isNotNull();
+
+        Assertions.assertThat(updatedUser.getUsername()).isEqualTo(savedUser.getUsername());
+    }
+
+    @Test
+    @DisplayName("delete method removes user when successful")
+    void deleteUser_DeleteUserOnDatabase_WhenSuccessful() {
+        CreateUserDTO userToSave = createUser();
+        User savedUser = this.userRepository.save(toUser(userToSave));
+
+        this.userRepository.delete(savedUser);
+
+        Optional<User> optionalUser = this.userRepository.findById(savedUser.getId());
+
+        Assertions.assertThat(optionalUser).isNotPresent();
+    }
+
+    @Test
+    @DisplayName("findById method returns User when successful")
+    void findById_ReturnsUser_WhenSuccessful() {
+        CreateUserDTO userToSave = createUser();
+        User savedUser = this.userRepository.save(toUser(userToSave));
+
+        Optional<User> foundUser = this.userRepository.findById(savedUser.getId());
+
+        Assertions.assertThat(foundUser).isNotEmpty().contains(savedUser);
+    }
+
+    @Test
+    @DisplayName("findById method returns empty User when user not found")
+    void findById_ReturnsEmptyUser_WhenUserNotFound() {
+        Optional<User> foundUser = this.userRepository.findById(2L);
+        Assertions.assertThat(foundUser).isEmpty();
+    }
 
     private CreateUserDTO createUser() {
         return CreateUserDTO.builder()
@@ -31,40 +97,5 @@ class UserRepositoryTest {
         user.setPassword(createUserDTO.password());
 
         return user;
-    }
-
-    @Test
-    @DisplayName("Save method persists user when successful")
-    void saveUser_PersistUserOnDatabase_WhenSuccessful() {
-        CreateUserDTO userToSave = createUser();
-
-        User savedUser = this.userRepository.save(toUser(userToSave));
-
-        Assertions.assertThat(savedUser).isNotNull();
-
-        Assertions.assertThat(savedUser.getId()).isNotNull();
-
-        Assertions.assertThat(savedUser.getUsername()).isNotNull();
-        Assertions.assertThat(savedUser.getEmail()).isNotNull();
-        Assertions.assertThat(savedUser.getPassword()).isNotNull();
-
-        Assertions.assertThat(savedUser.getUsername()).isEqualTo(userToSave.username());
-        Assertions.assertThat(savedUser.getEmail()).isEqualTo(userToSave.email());
-        Assertions.assertThat(savedUser.getPassword()).isEqualTo(userToSave.password());
-    }
-
-    @Test
-    @DisplayName("Save method persists user when successful")
-    void saveUser_UpdateUserOnDatabase_WhenSuccessful() {
-        CreateUserDTO userToSave = createUser();
-        User savedUser = this.userRepository.save(toUser(userToSave));
-
-        savedUser.setUsername("updated username");
-        User updatedUser = this.userRepository.save(savedUser);
-
-        Assertions.assertThat(updatedUser).isNotNull();
-        Assertions.assertThat(savedUser.getId()).isNotNull();
-
-        Assertions.assertThat(updatedUser.getUsername()).isEqualTo(savedUser.getUsername());
     }
 }

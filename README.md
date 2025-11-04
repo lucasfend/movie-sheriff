@@ -16,7 +16,7 @@ O foco principal seria: aplicar tecnologias de autenticação de usuário e rela
 - [Pincipais endpoints](#endpoints)
 - [Clique aqui para testar](#link)
 
-## Funcionalidades {#funcionalidades}
+## Funcionalidades
   - **Autenticação de usuários**
     > Sistema completo de registro e login de usuários via Spring Security.
   - **Busca de filmes**
@@ -26,7 +26,7 @@ O foco principal seria: aplicar tecnologias de autenticação de usuário e rela
   - **Consulta de Avaliações**
     > Usuário uma vez que for devidamente autenticado pode requisitar uma lista com todas avaliações, tanto sua quanto de outros usuários.
 
-## Tecnologias utilizadas (Stack) {#stack}
+## Tecnologias utilizadas (Stack)
   - **Java 21**
   - **Spring Framework** no geral, mas mais especificamente:
     > **Spring Data JPA** para persistência dos dados na base de dados;
@@ -36,7 +36,7 @@ O foco principal seria: aplicar tecnologias de autenticação de usuário e rela
   - **MapStruct** para gerar mappers de DTOs, facilitando a vida na hora da conversão de entidades e DTOs;
   - **The Movie Database (TMDb)** para recuperar dados dos filmes e manipular dentro da minha API;
 
-## Estrutura do Banco de dados {#database}
+## Estrutura do Banco de dados
 A intenção foi evitar a redundância de dados, então por isso possuo apenas duas entidades que são persistidas localmente, e nenhuma delas armazena muitas informações sobre os filmes, confira:
   - *MovieRating* é a entidade de avaliação, ela armazena respectivamente
     > id  -   um número identificador próprio gerado automaticamente, para identificação local apenas;
