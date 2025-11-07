@@ -1,6 +1,6 @@
-package com.fend.moviesheriff.domain.dto;
+package com.fend.moviesheriff.domain.dto.movieratingDTOs;
 
-import com.fend.moviesheriff.infra.dto.UserForMovieRatingProfileListDTO;
+import com.fend.moviesheriff.infra.dto.userDTO.UserForMovieRatingProfileListDTO;
 import lombok.Builder;
 
 import java.util.List;

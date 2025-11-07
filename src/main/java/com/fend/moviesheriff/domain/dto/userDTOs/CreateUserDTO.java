@@ -1,4 +1,4 @@
-package com.fend.moviesheriff.domain.dto;
+package com.fend.moviesheriff.domain.dto.userDTOs;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

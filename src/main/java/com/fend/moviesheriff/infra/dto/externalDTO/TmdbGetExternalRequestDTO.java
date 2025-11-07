@@ -1,4 +1,4 @@
-package com.fend.moviesheriff.infra.dto;
+package com.fend.moviesheriff.infra.dto.externalDTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;

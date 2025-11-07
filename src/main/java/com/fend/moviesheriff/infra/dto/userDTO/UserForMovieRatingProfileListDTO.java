@@ -1,4 +1,4 @@
-package com.fend.moviesheriff.infra.dto;
+package com.fend.moviesheriff.infra.dto.userDTO;
 
 import lombok.Builder;
 

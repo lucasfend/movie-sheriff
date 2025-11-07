@@ -1,4 +1,4 @@
-package com.fend.moviesheriff.domain.dto;
+package com.fend.moviesheriff.domain.dto.movieratingDTOs;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;

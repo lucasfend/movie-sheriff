@@ -1,6 +1,6 @@
-package com.fend.moviesheriff.domain.dto;
+package com.fend.moviesheriff.domain.dto.userDTOs;
 
-import com.fend.moviesheriff.infra.dto.MovieRatingForUserProfileListDTO;
+import com.fend.moviesheriff.infra.dto.movieratingDTO.MovieRatingForUserProfileListDTO;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

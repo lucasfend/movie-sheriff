@@ -1,21 +1,23 @@
 package com.fend.moviesheriff.domain.service;
 
-import com.fend.moviesheriff.domain.dto.CreateUserDTO;
-import com.fend.moviesheriff.domain.dto.UserResponseDTO;
+import com.fend.moviesheriff.domain.dto.userDTOs.CreateUserDTO;
+import com.fend.moviesheriff.domain.dto.userDTOs.UserResponseDTO;
+import com.fend.moviesheriff.domain.mapper.MovieRatingMapper;
 import com.fend.moviesheriff.domain.mapper.UserMapper;
 import com.fend.moviesheriff.domain.model.MovieRating;
 import com.fend.moviesheriff.domain.model.User;
 import com.fend.moviesheriff.domain.repository.MovieRatingRepository;
 import com.fend.moviesheriff.domain.repository.UserRepository;
 import com.fend.moviesheriff.exceptions.httpstatus.BadRequestException;
-import com.fend.moviesheriff.infra.dto.MovieRatingForUserProfileListDTO;
-import com.fend.moviesheriff.infra.dto.TmdbGetExternalRequestDTO;
+import com.fend.moviesheriff.infra.dto.movieratingDTO.MovieRatingForUserProfileListDTO;
+import com.fend.moviesheriff.infra.dto.externalDTO.TmdbGetExternalRequestDTO;
 import com.fend.moviesheriff.infra.service.TmdbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +26,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final MovieRatingRepository movieRatingRepository;
     private final TmdbService tmdbService;
+    private final MovieRatingMapper movieRatingMapper;
 
     public User findByIdOrThrowException(Long id) {
         return userRepository.findById(id)
@@ -73,11 +76,13 @@ public class UserService {
         return userRepository.save(userMapper.toUser(createUserDTO));
     }
 
-    public User updateUser(CreateUserDTO createUserDTO) {
-        User savedUser = findByIdOrThrowException(userMapper.toUser(createUserDTO).getId());
+    public void updateUser(CreateUserDTO createUserDTO) {
+        User savedUser = userRepository.findByUsername(userMapper.toUser(createUserDTO).getUsername());
+
         User user = userMapper.toUser(createUserDTO);
         user.setId(savedUser.getId());
+        user.setMovieRatings(movieRatingRepository.findAllByUser_Id(savedUser.getId()));
 
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 }

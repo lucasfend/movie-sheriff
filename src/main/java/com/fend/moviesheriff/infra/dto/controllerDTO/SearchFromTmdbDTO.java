@@ -1,5 +1,6 @@
-package com.fend.moviesheriff.infra.dto;
+package com.fend.moviesheriff.infra.dto.controllerDTO;
 
+import com.fend.moviesheriff.infra.dto.externalDTO.TmdbGetExternalRequestDTO;
 import lombok.Builder;
 
 import java.util.List;

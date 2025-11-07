@@ -1,6 +1,6 @@
 package com.fend.moviesheriff.domain.service;
 
-import com.fend.moviesheriff.domain.dto.CreateMovieRatingDTO;
+import com.fend.moviesheriff.domain.dto.movieratingDTOs.CreateMovieRatingDTO;
 import com.fend.moviesheriff.domain.mapper.MovieRatingMapper;
 import com.fend.moviesheriff.domain.model.MovieRating;
 import com.fend.moviesheriff.domain.model.User;

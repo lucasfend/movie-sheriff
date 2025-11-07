@@ -1,6 +1,6 @@
 package com.fend.moviesheriff.domain.repository;
 
-import com.fend.moviesheriff.domain.dto.CreateUserDTO;
+import com.fend.moviesheriff.domain.dto.userDTOs.CreateUserDTO;
 import com.fend.moviesheriff.domain.model.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

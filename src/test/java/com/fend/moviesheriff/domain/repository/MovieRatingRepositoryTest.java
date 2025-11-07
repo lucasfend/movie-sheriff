@@ -1,6 +1,6 @@
 package com.fend.moviesheriff.domain.repository;
 
-import com.fend.moviesheriff.domain.dto.CreateMovieRatingDTO;
+import com.fend.moviesheriff.domain.dto.movieratingDTOs.CreateMovieRatingDTO;
 import com.fend.moviesheriff.domain.model.MovieRating;
 import com.fend.moviesheriff.domain.model.User;
 import org.assertj.core.api.Assertions;

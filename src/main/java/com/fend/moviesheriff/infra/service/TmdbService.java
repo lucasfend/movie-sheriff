@@ -1,8 +1,8 @@
 package com.fend.moviesheriff.infra.service;
 
 import com.fend.moviesheriff.exceptions.httpstatus.BadRequestException;
-import com.fend.moviesheriff.infra.dto.SearchFromTmdbDTO;
-import com.fend.moviesheriff.infra.dto.TmdbGetExternalRequestDTO;
+import com.fend.moviesheriff.infra.dto.controllerDTO.SearchFromTmdbDTO;
+import com.fend.moviesheriff.infra.dto.externalDTO.TmdbGetExternalRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;

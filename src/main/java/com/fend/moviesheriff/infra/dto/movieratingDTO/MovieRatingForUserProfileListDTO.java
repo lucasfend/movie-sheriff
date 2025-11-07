@@ -1,4 +1,4 @@
-package com.fend.moviesheriff.infra.dto;
+package com.fend.moviesheriff.infra.dto.movieratingDTO;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
