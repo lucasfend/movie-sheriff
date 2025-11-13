@@ -1,23 +1,23 @@
-package com.fend.moviesheriff.domain.service;
+package com.fend.moviesheriff.domain.service.persistence;
 
 import com.fend.moviesheriff.domain.dto.userDTOs.CreateUserDTO;
 import com.fend.moviesheriff.domain.dto.userDTOs.UserResponseDTO;
-import com.fend.moviesheriff.domain.mapper.MovieRatingMapper;
 import com.fend.moviesheriff.domain.mapper.UserMapper;
 import com.fend.moviesheriff.domain.model.MovieRating;
 import com.fend.moviesheriff.domain.model.User;
 import com.fend.moviesheriff.domain.repository.MovieRatingRepository;
 import com.fend.moviesheriff.domain.repository.UserRepository;
 import com.fend.moviesheriff.exceptions.httpstatus.BadRequestException;
-import com.fend.moviesheriff.infra.dto.movieratingDTO.MovieRatingForUserProfileListDTO;
 import com.fend.moviesheriff.infra.dto.externalDTO.TmdbGetExternalRequestDTO;
+import com.fend.moviesheriff.infra.dto.movieratingDTO.MovieRatingForUserProfileListDTO;
 import com.fend.moviesheriff.infra.service.TmdbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.fend.moviesheriff.domain.service.auth.utils.BcryptPasswordUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +26,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final MovieRatingRepository movieRatingRepository;
     private final TmdbService tmdbService;
-    private final MovieRatingMapper movieRatingMapper;
+    private final BcryptPasswordUtil bcryptPasswordUtil;
 
     public User findByIdOrThrowException(Long id) {
         return userRepository.findById(id)
@@ -72,17 +72,30 @@ public class UserService {
         userRepository.delete(findByIdOrThrowException(id));
     }
 
-    public User saveUser(CreateUserDTO createUserDTO) {
-        return userRepository.save(userMapper.toUser(createUserDTO));
+    public void saveUser(CreateUserDTO createUserDTO) {
+        if (userRepository.findByUsername(createUserDTO.username()).isPresent()) throw new
+                BadRequestException("Username already exists");
+
+        User userToSave = new User();
+        userToSave.setUsername(createUserDTO.username());
+        userToSave.setEmail(createUserDTO.email());
+        String passwordHash = bcryptPasswordUtil.bcrypt().encode(createUserDTO.password());
+        userToSave.setPassword(passwordHash);
+        userRepository.save(userToSave);
     }
 
-    public void updateUser(CreateUserDTO createUserDTO) {
-        User savedUser = userRepository.findByUsername(userMapper.toUser(createUserDTO).getUsername());
+    public void updateUser(Long id, CreateUserDTO createUserDTO) {
+        User existingUser = findByIdOrThrowException(id);
 
-        User user = userMapper.toUser(createUserDTO);
-        user.setId(savedUser.getId());
-        user.setMovieRatings(movieRatingRepository.findAllByUser_Id(savedUser.getId()));
+        existingUser.setUsername(createUserDTO.username());
+        existingUser.setEmail(createUserDTO.email());
 
-        userRepository.save(user);
+        if (createUserDTO.password() != null && !createUserDTO.password().isEmpty()) {
+            existingUser.setPassword(bcryptPasswordUtil.bcrypt().encode(createUserDTO.password()));
+        }
+
+        existingUser.setMovieRatings(movieRatingRepository.findAllByUser_Id(existingUser.getId()));
+
+        userRepository.save(existingUser);
     }
 }

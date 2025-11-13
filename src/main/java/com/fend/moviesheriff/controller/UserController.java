@@ -3,7 +3,7 @@ package com.fend.moviesheriff.controller;
 import com.fend.moviesheriff.domain.dto.userDTOs.CreateUserDTO;
 import com.fend.moviesheriff.domain.dto.userDTOs.UserResponseDTO;
 import com.fend.moviesheriff.domain.model.User;
-import com.fend.moviesheriff.domain.service.UserService;
+import com.fend.moviesheriff.domain.service.persistence.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,20 +21,15 @@ public class UserController {
         return ResponseEntity.ok(userService.mappingExternalMovieByIdToUser(id));
     }
 
-    @PostMapping
-    public ResponseEntity<User> saveUser(@RequestBody @Valid CreateUserDTO createUserDTO) {
-        return new ResponseEntity<>(userService.saveUser(createUserDTO), HttpStatus.CREATED);
+    @PutMapping("profile/update")
+    public ResponseEntity<Void> updateUser(@RequestBody Long id, CreateUserDTO createUserDTO) {
+        userService.updateUser(id, createUserDTO);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("profile/{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
-    @PutMapping("profile/update")
-    public ResponseEntity<Void> updateUser(@RequestBody CreateUserDTO createUserDTO) {
-        userService.updateUser(createUserDTO);
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

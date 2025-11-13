@@ -22,6 +22,12 @@ public class User {
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<MovieRating> movieRatings;
 
+    @ManyToMany(fetch = FetchType.EAGER,  cascade = CascadeType.PERSIST)
+    @JoinTable(name="users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id"))
+    private List<Role> roles;
+
     // aux methods
 
     public void addMovieRatingToList(MovieRating movieRating) {

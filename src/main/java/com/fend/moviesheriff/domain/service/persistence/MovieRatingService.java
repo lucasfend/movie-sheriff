@@ -1,4 +1,4 @@
-package com.fend.moviesheriff.domain.service;
+package com.fend.moviesheriff.domain.service.persistence;
 
 import com.fend.moviesheriff.domain.dto.movieratingDTOs.CreateMovieRatingDTO;
 import com.fend.moviesheriff.domain.mapper.MovieRatingMapper;

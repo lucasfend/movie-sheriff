@@ -1,16 +1,14 @@
 # API de Avaliação de Filmes
 
-## Visão Geral {#section1}
-Esta é uma **API RESTful** desenvolvida em **Java** com **Spring**, meu projeto permite que usuários se cadastrem, autentiquem e crie sua própria avaliação para um determinado filme. O projeto é baseado em uma  
-base de dados externa de filmes, a The Movie Database (TMDb), que serve para buscar informações sobre filmes, evitando assim que eu tenha que possuir dados em grandes quantidades armazenados na minha própria  
-base de dados.
+## Visão Geral
+Esta é uma **API RESTful** desenvolvida em **Java** com **Spring**, meu projeto permite que usuários se cadastrem, autentiquem e crie sua própria avaliação para um determinado filme. O projeto é baseado em uma base de dados externa de filmes, a The Movie Database (TMDb), que serve para buscar informações sobre filmes, evitando assim que eu tenha que possuir dados em grandes quantidades armazenados na minha própria base de dados.
 
 O foco principal seria: aplicar tecnologias de autenticação de usuário e relacionar usuários e avaliações, sem persistir dados redundantes de forma local, de forma a consumir menos recurso.
 
 ## Tabela de Conteúdos
 - [Funcionalidades](#funcionalidades)
-- [Tecnologias utilizadas (Stack)](#stack)
-- [Estrutura do Banco de dados](#database)
+- [Tecnologias utilizadas (Stack)](#tecnologias-utilizadas-stack)
+- [Estrutura do Banco de dados](#estrutura-do-banco-de-dados)
 - [Consumo da API Externa (TMDb)](#tmdb)
 - [Pincipais desafios & Escolhas do design](#desafios&design)
 - [Pincipais endpoints](#endpoints)
@@ -28,25 +26,33 @@ O foco principal seria: aplicar tecnologias de autenticação de usuário e rela
 
 ## Tecnologias utilizadas (Stack)
   - **Java 21**
-  - **Spring Framework** no geral, mas mais especificamente:
-    > **Spring Data JPA** para persistência dos dados na base de dados;
-    > **Spring WebMvc** (WebClient) para realizar requisição externa HTTP e tratar os dados do corpo da requisição;
-    > **Spring Security** para autenticação de usuários;
   - **PostgreSQL** para armazenar os dados dos modelos/entidades User (usuário) e MovieRating (avaliação);
   - **MapStruct** para gerar mappers de DTOs, facilitando a vida na hora da conversão de entidades e DTOs;
   - **The Movie Database (TMDb)** para recuperar dados dos filmes e manipular dentro da minha API;
+  - **Spring Framework** no geral, mas mais especificamente:
+    > _**Spring Data JPA**_ para persistência dos dados na base de dados; 
+  
+    > _**Spring WebMvc (WebClient)**_ para realizar requisição externa HTTP e tratar os dados do corpo da requisição;
+    
+    > _**Spring Security**_ para autenticação de usuários;
 
 ## Estrutura do Banco de dados
 A intenção foi evitar a redundância de dados, então por isso possuo apenas duas entidades que são persistidas localmente, e nenhuma delas armazena muitas informações sobre os filmes, confira:
   - *MovieRating* é a entidade de avaliação, ela armazena respectivamente
     > id  -   um número identificador próprio gerado automaticamente, para identificação local apenas;
+  
     > externalId  -  o número identificador que é atribuido ao filme na API externa, usado para fazer buscas;
+    
     > rating  -  a nota em si;
+    
     > user  -  o usuário que fez a avaliação;
   - *User*
     > id  -  um número identificador próprio gerado automaticamente, para identificação local apenas;
+    
     > email  -  email do usuário como forma de acesso à sua conta;
+    
     > password  -  senha para autenticação do usuário juntamente ao email;
+    
     > ratings  -  uma lista das avaliações feitas por esse usuário;
 
 ### Relação das entidades
@@ -57,4 +63,4 @@ Nesta arquitetura, MovieRating é a entidade "dona" da relação (responsável p
 a relação já está mapeada pela outra entidade, evitando a criação de uma tabela de junção desnecessária.
 
 
-[Voltar ao topo](#section1)
+[Voltar ao topo](#visão-geral)

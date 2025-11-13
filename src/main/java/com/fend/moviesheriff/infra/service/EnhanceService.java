@@ -3,7 +3,6 @@ package com.fend.moviesheriff.infra.service;
 import com.fend.moviesheriff.domain.dto.movieratingDTOs.MovieRatingResponseDTO;
 import com.fend.moviesheriff.domain.model.MovieRating;
 import com.fend.moviesheriff.domain.repository.MovieRatingRepository;
-import com.fend.moviesheriff.exceptions.httpstatus.BadRequestException;
 import com.fend.moviesheriff.infra.dto.allRatingsDTO.ResponseAllMovieRatingsDTO;
 import com.fend.moviesheriff.infra.dto.controllerDTO.SearchFromTmdbDTO;
 import com.fend.moviesheriff.infra.dto.externalDTO.TmdbGetExternalRequestDTO;
@@ -13,7 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
+import static com.fend.moviesheriff.infra.utils.AverageRatingUtil.averageRating;
 
 @Service
 @RequiredArgsConstructor
@@ -73,15 +73,5 @@ public class EnhanceService {
                 })
                 .filter(Objects::nonNull)
                 .toList();
-    }
-
-    // aux methods
-    public double averageRating(List<MovieRating> movieRatings) {
-        double rating = movieRatings.stream()
-                .mapToDouble(MovieRating::getRating)
-                .average()
-                .orElse(0.0);
-
-        return Math.round(rating * 10.0) / 10.0;
     }
 }

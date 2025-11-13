@@ -2,7 +2,7 @@ package com.fend.moviesheriff.controller;
 
 import com.fend.moviesheriff.domain.dto.movieratingDTOs.CreateMovieRatingDTO;
 import com.fend.moviesheriff.domain.mapper.MovieRatingMapper;
-import com.fend.moviesheriff.domain.service.MovieRatingService;
+import com.fend.moviesheriff.domain.service.persistence.MovieRatingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
