@@ -1,7 +1,5 @@
 # Movie Sheriff - API de Avaliação de Filmes
 
-#
-
 ## Visão Geral
 Esta é uma **API RESTful** desenvolvida em **Java** com **Spring**, meu projeto permite que usuários se cadastrem, autentiquem e crie sua própria avaliação para um determinado filme. O projeto é baseado em uma base de dados externa de filmes, a The Movie Database (TMDb), que serve para buscar informações sobre filmes, evitando assim que eu tenha que possuir dados em grandes quantidades armazenados na minha própria base de dados.
 
@@ -16,7 +14,7 @@ O foco principal seria: aplicar tecnologias de autenticação de usuário e rela
 - [Consumo da API Externa (TMDb)](#consumo-da-api-externa-tmdb)
 - [Pincipais desafios e Escolhas do design](#pincipais-desafios-e-escolhas-do-design)
 
-#### Clique [aqui]() para testar!
+#### Clique [aqui](https://movie-sheriff.onrender.com/swagger-ui/index.html) para testar!
 
 ---
 
