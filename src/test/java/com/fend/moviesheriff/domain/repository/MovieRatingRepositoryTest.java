@@ -34,11 +34,11 @@ class MovieRatingRepositoryTest {
 
         Assertions.assertThat(savedMovieRating.getExternalId()).isNotNull();
         Assertions.assertThat(savedMovieRating.getRating()).isNotNull();
-        Assertions.assertThat(savedMovieRating.getUser()).isNotNull();
+        Assertions.assertThat(savedMovieRating.getUser().getUsername()).isNotNull();
 
         Assertions.assertThat(savedMovieRating.getExternalId()).isEqualTo(createMovieRatingDTO.externalId());
         Assertions.assertThat(savedMovieRating.getRating()).isEqualTo(createMovieRatingDTO.rating());
-        Assertions.assertThat(savedMovieRating.getUser().getId()).isEqualTo(createMovieRatingDTO.userID());
+        Assertions.assertThat(savedMovieRating.getUser().getUsername()).isEqualTo(createMovieRatingDTO.username());
     }
 
     @Test
@@ -77,12 +77,15 @@ class MovieRatingRepositoryTest {
         return CreateMovieRatingDTO.builder()
                 .externalId("24")
                 .rating(4.5)
-                .userID(1L)
+                .username("Pinhead")
                 .build();
     }
 
     private MovieRating toMovieRating(CreateMovieRatingDTO createMovieRatingDTO) {
         User user = new User();
+        user.setEmail("pinhead@gmail.com");
+        user.setUsername("Pinhead");
+        user.setPassword("123");
         User savedUser = userRepository.save(user);
 
         MovieRating movieRating = new MovieRating();

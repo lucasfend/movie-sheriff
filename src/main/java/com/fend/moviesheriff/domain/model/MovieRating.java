@@ -1,5 +1,6 @@
 package com.fend.moviesheriff.domain.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

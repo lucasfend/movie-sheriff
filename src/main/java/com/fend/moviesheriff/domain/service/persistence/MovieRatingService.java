@@ -24,7 +24,7 @@ public class MovieRatingService {
     private final MovieRatingMapper movieRatingMapper;
 
     public CreateMovieRatingDTO saveMovieRating(CreateMovieRatingDTO createMovieRatingDTO) {
-        User user = userService.findByIdOrThrowException(createMovieRatingDTO.userID());
+        User user = userService.findByUsername(createMovieRatingDTO.username());
         tmdbService.getMovieDetailsOnExternalAPIById(createMovieRatingDTO.externalId());
 
         MovieRating movieRatingToSave = new MovieRating();
@@ -42,16 +42,6 @@ public class MovieRatingService {
 
         return movieRatingMapper.toMovieRatingDTO(movieRatingRepository.save(movieRatingToSave));
     }
-
-    public List<CreateMovieRatingDTO> getAllMovieRating() {
-        List<MovieRating> movieRating = movieRatingRepository.findAll();
-
-        return movieRating.stream()
-                .map(movieRatingMapper::toMovieRatingDTO)
-                .collect(Collectors.toList());
-    }
-
-    // internal service operation methods
 
     public MovieRating findMovieRatingByIdOrThrowException(Long id) {
         return movieRatingRepository.findById(id)

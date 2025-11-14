@@ -19,7 +19,7 @@ public class SecurityConfig {
 
     public static final String[] ENDPOINTS_WITH_NO_AUTH_REQUIRED = {
             "/auth/register",
-            "/auth/login",
+            "/auth/login"
     };
 
     public static final String[] ENDPOINTS_WITH_AUTH_REQUIRED = {
@@ -35,12 +35,18 @@ public class SecurityConfig {
     };
 
     @Bean
-    public SecurityFilterChain springSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers(
+                                "/auth/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        )
+                        .permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

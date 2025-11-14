@@ -15,8 +15,7 @@ public record CreateMovieRatingDTO(
         @Min(0)
         double rating,
 
-        @NotNull(message = "User Id cannot be null")
-        @Min(0)
-        Long userID
+        @NotNull(message = "Username cannot be null")
+        String username
 ) {
 }

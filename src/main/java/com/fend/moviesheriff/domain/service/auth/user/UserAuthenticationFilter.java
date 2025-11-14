@@ -17,7 +17,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-import static com.fend.moviesheriff.domain.service.auth.utils.CheckEndpointUtil.checkIfEndpointIsNotPublic;
 import static com.fend.moviesheriff.domain.service.auth.utils.TokenRecoveryUtil.recoveryToken;
 
 @Component
@@ -29,21 +28,26 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        if (checkIfEndpointIsNotPublic(request)) {
+        //if (checkIfEndpointIsNotPublic(request)) {
             String token = recoveryToken(request);
             if (token != null) {
                 String subjectRecover = jwtTokenService.getSubjectFromTokenGivenOnRequest(token);
-                User searchUser = userRepository.findByUsername(subjectRecover).get();
+
+                User searchUser = userRepository.findUserByUsername(subjectRecover)
+                        .orElseThrow(() -> new BadCredentialsException("Invalid username or password"));
+
                 UserDetailsImpl userDetails = new UserDetailsImpl(searchUser);
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
                         null,
                         userDetails.getAuthorities());
+
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+
             } else {
-                throw new BadCredentialsException("Invalid token");
+                SecurityContextHolder.clearContext();
             }
-        }
+        //}
         filterChain.doFilter(request, response);
     }
 }

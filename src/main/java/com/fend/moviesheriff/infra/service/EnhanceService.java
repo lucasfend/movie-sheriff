@@ -48,9 +48,7 @@ public class EnhanceService {
     public List<ResponseAllMovieRatingsDTO> getEnhancedAllDTOByName(String original_title) {
         SearchFromTmdbDTO resultsFromExternalAPI = tmdbService.getMovieListOnExternalAPIByName(original_title);
 
-        List<ResponseAllMovieRatingsDTO> responseAllMovieRatingsDTOList;
-
-        return responseAllMovieRatingsDTOList = resultsFromExternalAPI.results().stream()
+        return resultsFromExternalAPI.results().stream()
                 .map(tmdbGetExternalRequestDTO -> {
                     String externalId = tmdbGetExternalRequestDTO.id();
 

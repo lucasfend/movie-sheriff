@@ -9,6 +9,5 @@ import org.mapstruct.Mapping;
 public interface MovieRatingMapper {
     MovieRating toMovieRating(CreateMovieRatingDTO createMovieRatingDTO);
 
-    @Mapping(source = "user.id", target = "userID")
     CreateMovieRatingDTO toMovieRatingDTO(MovieRating movieRating);
 }

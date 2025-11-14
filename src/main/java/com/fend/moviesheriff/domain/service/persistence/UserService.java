@@ -17,7 +17,6 @@ import com.fend.moviesheriff.domain.service.auth.utils.BcryptPasswordUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -73,7 +72,7 @@ public class UserService {
     }
 
     public void saveUser(CreateUserDTO createUserDTO) {
-        if (userRepository.findByUsername(createUserDTO.username()).isPresent()) throw new
+        if (userRepository.findUserByUsername(createUserDTO.username()).isPresent()) throw new
                 BadRequestException("Username already exists");
 
         User userToSave = new User();
@@ -82,6 +81,11 @@ public class UserService {
         String passwordHash = bcryptPasswordUtil.bcrypt().encode(createUserDTO.password());
         userToSave.setPassword(passwordHash);
         userRepository.save(userToSave);
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new BadRequestException("User not found"));
     }
 
     public void updateUser(Long id, CreateUserDTO createUserDTO) {

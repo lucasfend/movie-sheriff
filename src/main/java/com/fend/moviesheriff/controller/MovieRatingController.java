@@ -1,7 +1,6 @@
 package com.fend.moviesheriff.controller;
 
 import com.fend.moviesheriff.domain.dto.movieratingDTOs.CreateMovieRatingDTO;
-import com.fend.moviesheriff.domain.mapper.MovieRatingMapper;
 import com.fend.moviesheriff.domain.service.persistence.MovieRatingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MovieRatingController {
     private final MovieRatingService movieRatingService;
-    private final MovieRatingMapper movieRatingMapper;
 
     @PostMapping
-    public ResponseEntity<CreateMovieRatingDTO> saveMovieRating(@RequestBody @Valid CreateMovieRatingDTO createMovieRatingDTO) {
-        return new ResponseEntity<>(movieRatingService.saveMovieRating(createMovieRatingDTO), HttpStatus.CREATED);
+    public ResponseEntity<Void> saveMovieRating(@RequestBody @Valid CreateMovieRatingDTO createMovieRatingDTO) {
+        movieRatingService.saveMovieRating(createMovieRatingDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
 }
