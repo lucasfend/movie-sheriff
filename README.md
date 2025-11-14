@@ -15,11 +15,8 @@ O foco principal seria: aplicar tecnologias de autenticação de usuário e rela
 - [Estrutura do Banco de dados](#estrutura-do-banco-de-dados)
 - [Consumo da API Externa (TMDb)](#consumo-da-api-externa-tmdb)
 - [Pincipais desafios e Escolhas do design](#pincipais-desafios-e-escolhas-do-design)
-- [Pincipais endpoints](#principais-endpoints)
 
 #### Clique [aqui]() para testar!
-
-
 
 ---
 
@@ -90,6 +87,8 @@ Após então realizar a devida criação do meu cliente com os atributos necess�
 
 ---
  
-
+### Pincipais desafios e Escolhas do design
+Particularmente, fora o fato da persistência de usuários, a aplicação é inteira baseada em uma base de dados externa, na qual possui limite de requisições. Talvez a maior dificuldade seja a utilização de DTOs para a manipulação de dados.  
+Optei pela não persistência de dados redundantes em minha base de dados, então um dos desafios foi conseguir puxar da base de dados local o id externo e com esse id externo ir na base de dados externa buscar pelo filme e seus dados, de forma a fazer o enriquecimento para posterior exposição utilizando-se tanto dos dados externos como nome e poster quanto dos dados locais como avaliação e quem fez a avaliação.
 
 [Voltar ao topo](#visão-geral)
